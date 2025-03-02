@@ -4,9 +4,12 @@
 
 package frc.robot;
 
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -26,6 +29,9 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
+
+  public final DriveSubsystem m_drive = new DriveSubsystem();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -43,12 +49,22 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    // new Trigger(m_exampleSubsystem::exampleCondition)
+    //     .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+
+        m_drive.setDefaultCommand(new DriveCommand(m_drive,
+        () -> -m_driverController.getLeftY(),
+        () -> -m_driverController.getRightY(),
+        () -> true));
+
+        m_driverController.leftBumper().whileTrue(new DriveCommand(m_drive, 
+        () -> -m_driverController.getLeftY() * DriveConstants.SLOW_MODE_MOVE,  
+        () -> -m_driverController.getRightX() * DriveConstants.SLOW_MODE_TURN,
+        () -> true));
   }
 
   /**
