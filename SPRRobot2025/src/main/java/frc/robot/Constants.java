@@ -29,4 +29,9 @@ public final class Constants {
     public static final double SLOW_MODE_MOVE = 0.5;
     public static final double SLOW_MODE_TURN = 0.6;
   }
+
+  public static class RollerConstants {
+    public static final int ROLLER_MOTOR_ID = 1000; // TODO Assign real value
+    public static final double ROLLER_EJECT_VALUE = 0.5; // TODO Assign real value
+  }
 }
