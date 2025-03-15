@@ -77,12 +77,11 @@ public class RobotContainer {
         // RollerCommand with the values provided by the triggers on the operator
         // controller
         rollerSubsystem.setDefaultCommand(new RollerCommand(
-          () -> m_operatorController.getRightTriggerAxis(),
-          () -> m_operatorController.getLeftTriggerAxis(),
+          () -> -m_operatorController.getRightTriggerAxis(),
           rollerSubsystem));
 
         m_operatorController.a()
-          .whileTrue(new RollerCommand(() -> RollerConstants.ROLLER_EJECT_VALUE, () -> 0, rollerSubsystem));
+          .whileTrue(new RollerCommand(() -> RollerConstants.ROLLER_EJECT_VALUE, rollerSubsystem));
 
   }
 
