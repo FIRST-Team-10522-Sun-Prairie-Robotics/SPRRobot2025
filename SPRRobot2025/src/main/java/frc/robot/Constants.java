@@ -39,9 +39,13 @@ public final class Constants {
   public static class RollerConstants {
     public static final int ROLLER_MOTOR_ID = 6; 
     public static final double ROLLER_EJECT_VALUE = -0.5; 
+    
   }
 
   public static class ClimberConstants {
     public static final int ROLLER_MOTOR_ID = 1000; // TODO Assign real value
+    public static final double CLIMBER_SPEED_UP = 0.60; // TODO Assign real value
+    public static final double CLIMBER_SPEED_DOWN = -0.60; // TODO Assign real value
+
   }
 }
