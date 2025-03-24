@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -43,6 +44,7 @@ public class DriveSubsystem extends SubsystemBase {
     rightLeader.setCANTimeout(250);
     leftFollower.setCANTimeout(250);
     rightFollower.setCANTimeout(250);
+
 
     // Create the configuration to apply to motors. Voltage compensation
     // helps the robot perform more similarly on different
@@ -99,5 +101,9 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void driveTank(double leftSpeed, double rightSpeed, boolean squared){
     drive.tankDrive(leftSpeed, rightSpeed, squared);
+  }
+
+  public void driveCurvature(double xSpeed, double zRotation, boolean allowTurnInPlace) {
+    drive.curvatureDrive(xSpeed, zRotation, allowTurnInPlace);
   }
 }

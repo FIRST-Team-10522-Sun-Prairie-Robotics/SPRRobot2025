@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.RollerConstants;
+import frc.robot.autos.DriveForwardAuto;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ClimberDownCommand;
 import frc.robot.commands.ClimberUpCommand;
@@ -17,6 +18,8 @@ import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.RollerSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -29,24 +32,27 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final RollerSubsystem rollerSubsystem = new RollerSubsystem();
-  private final ClimberSubsystem climber = new ClimberSubsystem();
+  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  // private final RollerSubsystem rollerSubsystem = new RollerSubsystem();
+  // private final ClimberSubsystem climber = new ClimberSubsystem();
 
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController m_operatorController =
       new CommandXboxController(OperatorConstants.kDriverOperatorPort);
 
-    
-
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   public final DriveSubsystem m_drive = new DriveSubsystem();
+  public final DriveForwardAuto m_driveForwardAuto = new DriveForwardAuto(m_drive);
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    m_chooser.addOption("Drive Forward Auto", m_driveForwardAuto);
+    SmartDashboard.putData(m_chooser);
   }
 
   /**
@@ -80,12 +86,12 @@ public class RobotContainer {
         // Set the default command for the roller subsystem to an instance of
         // RollerCommand with the values provided by the triggers on the operator
         // controller
-        rollerSubsystem.setDefaultCommand(new RollerCommand(
-          () -> -m_operatorController.getRightTriggerAxis(),
-          rollerSubsystem));
+        // rollerSubsystem.setDefaultCommand(new RollerCommand(
+        //   () -> -m_operatorController.getRightTriggerAxis(),
+        //   rollerSubsystem));
 
-        m_operatorController.a()
-          .whileTrue(new RollerCommand(() -> RollerConstants.ROLLER_EJECT_VALUE, rollerSubsystem));
+        // m_operatorController.a()
+        //   .whileTrue(new RollerCommand(() -> RollerConstants.ROLLER_EJECT_VALUE, rollerSubsystem));
 
         // m_operatorController.y().whileTrue(new ClimberUpCommand(climber));
         // m_operatorController.a().whileTrue(new ClimberDownCommand(climber));
@@ -100,6 +106,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    // return Autos.exampleAuto(m_exampleSubsystem);
+    return m_chooser.getSelected();
   }
 }
