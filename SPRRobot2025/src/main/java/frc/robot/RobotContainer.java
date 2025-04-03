@@ -8,12 +8,15 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.RollerConstants;
 import frc.robot.autos.DriveForwardAuto;
+import frc.robot.commands.ArmDownCommand;
+import frc.robot.commands.ArmUpCommand;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ClimberDownCommand;
 import frc.robot.commands.ClimberUpCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RollerCommand;
+import frc.robot.subsystems.AlgaeArm;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -33,8 +36,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  // private final RollerSubsystem rollerSubsystem = new RollerSubsystem();
-  // private final ClimberSubsystem climber = new ClimberSubsystem();
+  private final RollerSubsystem rollerSubsystem = new RollerSubsystem();
+  private final ClimberSubsystem climber = new ClimberSubsystem();
+  private final AlgaeArm arm = new AlgaeArm();
 
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -86,16 +90,15 @@ public class RobotContainer {
         // Set the default command for the roller subsystem to an instance of
         // RollerCommand with the values provided by the triggers on the operator
         // controller
-        // rollerSubsystem.setDefaultCommand(new RollerCommand(
-        //   () -> -m_operatorController.getRightTriggerAxis(),
-        //   rollerSubsystem));
+        rollerSubsystem.setDefaultCommand(new RollerCommand(() -> m_operatorController.getLeftY(), rollerSubsystem));
+        //m_operatorController.x().whileTrue(new RollerCommand(() -> RollerConstants.ROLLER_EJECT_VALUE, rollerSubsystem));
 
-        // m_operatorController.a()
-        //   .whileTrue(new RollerCommand(() -> RollerConstants.ROLLER_EJECT_VALUE, rollerSubsystem));
+        m_operatorController.y().whileTrue(new ClimberUpCommand(climber));
+        m_operatorController.a().whileTrue(new ClimberDownCommand(climber));
 
-        // m_operatorController.y().whileTrue(new ClimberUpCommand(climber));
-        // m_operatorController.a().whileTrue(new ClimberDownCommand(climber));
-
+        
+        m_operatorController.b().whileTrue(new ArmDownCommand(arm));
+        m_operatorController.x().whileTrue(new ArmUpCommand(arm));
 
   }
 

@@ -16,7 +16,7 @@ public class ClimberSubsystem extends SubsystemBase {
     private final SparkMax climbMotor;
     /** Creates a new ClimberSubsystems. */
     public ClimberSubsystem() {
-      climbMotor = new SparkMax(ClimberConstants.ROLLER_MOTOR_ID, MotorType.kBrushless);
+      climbMotor = new SparkMax(ClimberConstants.CLIMBER_MOTOR_ID, MotorType.kBrushless);
 
       SparkMaxConfig climbConfig = new SparkMaxConfig();
       climbConfig.idleMode(IdleMode.kBrake);

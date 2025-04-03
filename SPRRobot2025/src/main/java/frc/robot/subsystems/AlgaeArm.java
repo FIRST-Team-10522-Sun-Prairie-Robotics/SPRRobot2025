@@ -8,6 +8,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import frc.robot.Constants.ArmConstants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -15,7 +16,7 @@ public class AlgaeArm extends SubsystemBase {
   private final SparkMax armMotor;
   /** Creates a new PickAlgae. */
   public AlgaeArm() {
-    armMotor = new SparkMax(0, MotorType.kBrushed);
+    armMotor = new SparkMax(ArmConstants.ARM_MOTOR_ID, MotorType.kBrushed);
     SparkMaxConfig armConfig = new SparkMaxConfig();
     armConfig.idleMode(IdleMode.kBrake);
   }
@@ -27,6 +28,6 @@ public class AlgaeArm extends SubsystemBase {
   }
 SparkMaxConfig armConfig = new SparkMaxConfig();
   public void runArm(double speed) {
-    armMotor.set(0);
+    armMotor.set(speed);
   }
 }

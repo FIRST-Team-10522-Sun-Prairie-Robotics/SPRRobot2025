@@ -41,6 +41,6 @@ public class RollerSubsystem extends SubsystemBase {
 
   /** This is a method that makes the roller spin */
   public void runRoller(double forward) {
-    rollerMotor.set(-forward);
+    rollerMotor.set(forward);
   }
 }

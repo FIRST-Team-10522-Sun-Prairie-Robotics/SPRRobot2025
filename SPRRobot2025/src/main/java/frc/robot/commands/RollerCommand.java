@@ -20,7 +20,7 @@ public class RollerCommand extends Command {
     this.forward = forward;
     this.rollerSubsystem = rollerSubsystem;
 
-    addRequirements(this.rollerSubsystem);
+    addRequirements(rollerSubsystem);
   }
 
   @Override

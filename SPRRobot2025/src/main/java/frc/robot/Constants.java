@@ -37,15 +37,23 @@ public final class Constants {
   }
 
   public static class RollerConstants {
-    public static final int ROLLER_MOTOR_ID = 6; 
+    public static final int ROLLER_MOTOR_ID = 51; 
     public static final double ROLLER_EJECT_VALUE = -0.5; 
     
   }
 
   public static class ClimberConstants {
-    public static final int ROLLER_MOTOR_ID = 1000; // TODO Assign real value
-    public static final double CLIMBER_SPEED_UP = 0.60; // TODO Assign real value
-    public static final double CLIMBER_SPEED_DOWN = -0.60; // TODO Assign real value
+    public static final int CLIMBER_MOTOR_ID = 62; // TODO Assign real value
+    public static final double CLIMBER_SPEED_UP = .6; // TODO Assign real value
+    public static final double CLIMBER_SPEED_DOWN = -.6; // TODO Assign real value
 
+  }
+
+  public static class ArmConstants {
+    public static final int ARM_MOTOR_ID = 52;
+    public static final double ARM_SPEED_UP = -0.3;
+    public static final double ARM_HOLD_UP = -0.15;
+    public static final double ARM_SPEED_DOWN = 0.3;
+    public static final double ARM_HOLD_DOWN = 0.1;
   }
 }
