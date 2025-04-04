@@ -50,7 +50,9 @@ public class DriveCommand extends Command {
   @Override
   public void execute() {
     // m_drive.driveArcade(m_xSpeed.getAsDouble(), m_zRotation.getAsDouble(), m_squared.getAsBoolean());
-    m_drive.driveTank(m_xSpeed.getAsDouble(), -m_ySpeed.getAsDouble(), isScheduled());
+    // m_drive.driveTank(m_xSpeed.getAsDouble(), -m_ySpeed.getAsDouble(), isScheduled());
+    m_drive.driveCurvature(m_xSpeed.getAsDouble(), -m_ySpeed.getAsDouble(), isScheduled());
+
   }
 
   // Runs each time the command ends via isFinished or being interrupted.

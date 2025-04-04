@@ -78,24 +78,25 @@ public class RobotContainer {
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
         m_drive.setDefaultCommand(new DriveCommand(m_drive,
-        () -> -m_driverController.getLeftY(),
-        () -> -m_driverController.getRightY(),
+        () -> m_driverController.getLeftY(),
+        () -> m_driverController.getRightY(),
         () -> true));
 
         m_driverController.leftBumper().whileTrue(new DriveCommand(m_drive, 
-        () -> -m_driverController.getLeftY() * DriveConstants.SLOW_MODE_MOVE,  
-        () -> -m_driverController.getRightX() * DriveConstants.SLOW_MODE_TURN,
+        () -> m_driverController.getLeftY() * DriveConstants.SLOW_MODE_MOVE,  
+        () -> m_driverController.getRightX() * DriveConstants.SLOW_MODE_TURN,
         () -> true));
 
         // Set the default command for the roller subsystem to an instance of
         // RollerCommand with the values provided by the triggers on the operator
         // controller
         rollerSubsystem.setDefaultCommand(new RollerCommand(() -> m_operatorController.getLeftY(), rollerSubsystem));
+        // rollerSubsystem.setDefaultCommand(new RollerCommand(() -> -m_operatorController.getRightY(), rollerSubsystem));
+
         //m_operatorController.x().whileTrue(new RollerCommand(() -> RollerConstants.ROLLER_EJECT_VALUE, rollerSubsystem));
 
         m_operatorController.y().whileTrue(new ClimberUpCommand(climber));
         m_operatorController.a().whileTrue(new ClimberDownCommand(climber));
-
         
         m_operatorController.b().whileTrue(new ArmDownCommand(arm));
         m_operatorController.x().whileTrue(new ArmUpCommand(arm));
