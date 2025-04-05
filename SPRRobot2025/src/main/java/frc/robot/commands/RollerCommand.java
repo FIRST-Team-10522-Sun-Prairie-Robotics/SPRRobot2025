@@ -32,7 +32,7 @@ public class RollerCommand extends Command {
   @Override
   public void execute() {
     // Run the roller motor at the desired speed
-    rollerSubsystem.runRoller(reverse*0.1/*forward.getAsDouble()*/);
+    rollerSubsystem.runRoller(reverse/*forward.getAsDouble()*/);
   }
 
   // Runs each time the command ends via isFinished or being interrupted.
@@ -47,6 +47,7 @@ public class RollerCommand extends Command {
   public boolean isFinished() {
     // Return false to indicate that this command never ends. It can be interrupted
     // by another command needing the same subsystem.
+
     return false;
   }
 }

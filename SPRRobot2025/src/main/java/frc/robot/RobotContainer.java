@@ -90,8 +90,8 @@ public class RobotContainer {
 
     
         m_driverController.leftBumper().whileTrue(new DriveCommand(m_drive, 
-        () -> m_driverController.getLeftY() * DriveConstants.SLOW_MODE_MOVE,  
-        () -> m_driverController.getRightX() * DriveConstants.SLOW_MODE_TURN,
+        () -> m_driverController.getRightX() * DriveConstants.SLOW_MODE_MOVE,  
+        () -> m_driverController.getLeftY() * DriveConstants.SLOW_MODE_TURN,
         () -> true));
 
         // Set the default command for the roller subsystem to an instance of

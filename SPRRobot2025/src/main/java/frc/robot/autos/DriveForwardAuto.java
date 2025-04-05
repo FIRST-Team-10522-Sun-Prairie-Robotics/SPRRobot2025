@@ -46,7 +46,9 @@ public class DriveForwardAuto extends Command {
     if(timer.get() < drive_seconds)
     {
         // m_drive.driveArcade(0.3, 0.0,false);
-        m_drive.driveTank(-0.3, 0.3, false);
+        // m_drive.driveTank(-0.3, 0.3, false);
+        m_drive.driveTank(0.3, -0.3, false);
+
     }
   }
 

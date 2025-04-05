@@ -25,8 +25,8 @@ public final class Constants {
     // public static final int RIGHT_LEADER_ID = 3;
     // public static final int RIGHT_FOLLOWER_ID = 5;
 
-    public static final int LEFT_LEADER_ID = 3;
-    public static final int LEFT_FOLLOWER_ID = 5;
+    public static final int LEFT_LEADER_ID = 5; // used to be 3
+    public static final int LEFT_FOLLOWER_ID = 3; // used to be 5
     public static final int RIGHT_LEADER_ID = 4;
     public static final int RIGHT_FOLLOWER_ID = 2;
 

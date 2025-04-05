@@ -11,6 +11,7 @@ public class DriveForwardScoreAuto extends Command {
 
     private Timer timer;
     private double drive_seconds = 3.25;
+    private double reel_seconds = drive_seconds + 1;
     private double score_seconds = drive_seconds + 3.25;
 
 
@@ -53,12 +54,19 @@ public class DriveForwardScoreAuto extends Command {
     if(timer.get() < drive_seconds)
     {
         // m_drive.driveArcade(0.3, 0.0,false);
-        m_drive.driveTank(-0.3, 0.3, false);
+        // m_drive.driveTank(-0.3, 0.3, false);
+        m_drive.driveTank(0.15, -0.15, false);
+
+    }
+
+    if(timer.get() > drive_seconds && timer.get() < reel_seconds) {
+      m_roller.runRoller(0.6);
     }
 
     if(timer.get() > drive_seconds && timer.get() < score_seconds) {
-      m_drive.driveTank(-0.3, 0.3, false);
-      m_roller.runRoller(-0.5);
+      // m_drive.driveTank(-0.3, 0.3, false);
+      m_drive.driveTank(0.15, -0.15, false);
+      m_roller.runRoller(-0.95);
     }
   }
 
