@@ -3,11 +3,16 @@ package frc.robot.autos;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.RollerSubsystem;
 
-public class DriveForwardAuto extends Command {
+public class DriveForwardScoreAuto extends Command {
     private DriveSubsystem m_drive;
+    private RollerSubsystem m_roller;
+
     private Timer timer;
-    private double drive_seconds = 8;
+    private double drive_seconds = 3.25;
+    private double score_seconds = drive_seconds + 3.25;
+
 
       /**
      * This auto will have the robot drive forwards
@@ -23,13 +28,15 @@ public class DriveForwardAuto extends Command {
      * 
      * @param drive
      */
-    public DriveForwardAuto(DriveSubsystem drive)
+    public DriveForwardScoreAuto(DriveSubsystem drive, RollerSubsystem roller)
     {
         m_drive = drive;
+        m_roller = roller;
         
         timer = new Timer();
 
-        addRequirements(m_drive);
+        addRequirements(m_drive, roller);
+        // addRequirements(roller);
     }
 
     @Override
@@ -48,6 +55,11 @@ public class DriveForwardAuto extends Command {
         // m_drive.driveArcade(0.3, 0.0,false);
         m_drive.driveTank(-0.3, 0.3, false);
     }
+
+    if(timer.get() > drive_seconds && timer.get() < score_seconds) {
+      m_drive.driveTank(-0.3, 0.3, false);
+      m_roller.runRoller(-0.5);
+    }
   }
 
   // Runs each time the command ends via isFinished or being interrupted.
@@ -55,6 +67,7 @@ public class DriveForwardAuto extends Command {
   public void end(boolean isInterrupted) {
     // stop drive motors
     m_drive.driveArcade(0, 0, false);
+    m_roller.runRoller(0);
     timer.stop();
   }
 
@@ -64,6 +77,6 @@ public class DriveForwardAuto extends Command {
   public boolean isFinished() {
     // check if timer exceeds seconds, when it has this will return true indicating
     // this command is finished
-    return timer.get() >= drive_seconds;
+    return timer.get() >= score_seconds;
   }
 }

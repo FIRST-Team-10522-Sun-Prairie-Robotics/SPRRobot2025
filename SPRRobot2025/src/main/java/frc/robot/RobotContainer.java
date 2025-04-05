@@ -8,6 +8,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.RollerConstants;
 import frc.robot.autos.DriveForwardAuto;
+import frc.robot.autos.DriveForwardScoreAuto;
 import frc.robot.commands.ArmDownCommand;
 import frc.robot.commands.ArmUpCommand;
 import frc.robot.commands.Autos;
@@ -49,6 +50,8 @@ public class RobotContainer {
 
   public final DriveSubsystem m_drive = new DriveSubsystem();
   public final DriveForwardAuto m_driveForwardAuto = new DriveForwardAuto(m_drive);
+  public final DriveForwardScoreAuto m_driveForwardScoreAuto = new DriveForwardScoreAuto(m_drive, rollerSubsystem);
+
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -56,6 +59,8 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
     m_chooser.addOption("Drive Forward Auto", m_driveForwardAuto);
+    m_chooser.addOption("Drive Forward Score Auto", m_driveForwardScoreAuto);
+
     SmartDashboard.putData(m_chooser);
   }
 
@@ -78,10 +83,12 @@ public class RobotContainer {
     // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
         m_drive.setDefaultCommand(new DriveCommand(m_drive,
+        () -> m_driverController.getRightX(),
         () -> m_driverController.getLeftY(),
-        () -> m_driverController.getRightY(),
         () -> true));
 
+
+    
         m_driverController.leftBumper().whileTrue(new DriveCommand(m_drive, 
         () -> m_driverController.getLeftY() * DriveConstants.SLOW_MODE_MOVE,  
         () -> m_driverController.getRightX() * DriveConstants.SLOW_MODE_TURN,
@@ -90,10 +97,12 @@ public class RobotContainer {
         // Set the default command for the roller subsystem to an instance of
         // RollerCommand with the values provided by the triggers on the operator
         // controller
-        rollerSubsystem.setDefaultCommand(new RollerCommand(() -> m_operatorController.getLeftY(), rollerSubsystem));
+        //rollerSubsystem.setDefaultCommand(new RollerCommand(() -> m_operatorController.getLeftY(), rollerSubsystem));
         // rollerSubsystem.setDefaultCommand(new RollerCommand(() -> -m_operatorController.getRightY(), rollerSubsystem));
 
         //m_operatorController.x().whileTrue(new RollerCommand(() -> RollerConstants.ROLLER_EJECT_VALUE, rollerSubsystem));
+        m_operatorController.povDown().whileTrue(new RollerCommand(rollerSubsystem, 1));
+        m_operatorController.povUp().whileTrue(new RollerCommand(rollerSubsystem, -1));
 
         m_operatorController.y().whileTrue(new ClimberUpCommand(climber));
         m_operatorController.a().whileTrue(new ClimberDownCommand(climber));
@@ -101,6 +110,9 @@ public class RobotContainer {
         m_operatorController.b().whileTrue(new ArmDownCommand(arm));
         m_operatorController.x().whileTrue(new ArmUpCommand(arm));
 
+        // triggers -> rolllers (oppo directions)
+        // climb -> y, a
+        // b, x 
   }
 
   /**

@@ -11,15 +11,16 @@ import java.util.function.DoubleSupplier;
 
 // Command to run the roller with joystick inputs
 public class RollerCommand extends Command {
-  private final DoubleSupplier forward;
+  //private final DoubleSupplier forward;
   // private final CANRollerSubsystem rollerSubsystem;
+  double reverse;
   private final RollerSubsystem rollerSubsystem;
 
   public RollerCommand(
-      DoubleSupplier forward, RollerSubsystem rollerSubsystem) {
-    this.forward = forward;
+      /*DoubleSupplier forward,*/ RollerSubsystem rollerSubsystem, double reverse) {
+    //this.forward = forward;
     this.rollerSubsystem = rollerSubsystem;
-
+    this.reverse = reverse;
     addRequirements(rollerSubsystem);
   }
 
@@ -31,12 +32,13 @@ public class RollerCommand extends Command {
   @Override
   public void execute() {
     // Run the roller motor at the desired speed
-    rollerSubsystem.runRoller(forward.getAsDouble());
+    rollerSubsystem.runRoller(reverse*0.1/*forward.getAsDouble()*/);
   }
 
   // Runs each time the command ends via isFinished or being interrupted.
   @Override
   public void end(boolean isInterrupted) {
+    rollerSubsystem.runRoller(0);
   }
 
   // Runs every cycle while the command is scheduled to check if the command is
